@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-background text-on-background font-body-md text-body-md;
+        word-break: keep-all;
+        overflow-wrap: break-word;
+    }
+
+    #root {
+        min-height: 100vh;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    li,
+    a,
+    span {
+        word-break: keep-all;
+        overflow-wrap: break-word;
+    }
+}
+
+@layer utilities {
+    /* 격자 무늬 */
+    .grid-bg {
+        background-image:
+                linear-gradient(to right, rgba(148, 163, 184, 0.045) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(148, 163, 184, 0.045) 1px, transparent 1px);
+        background-size: 28px 28px;
+    }
+
+    .custom-scrollbar {
+        scrollbar-width: thin;
+        scrollbar-color: theme("colors.outline") theme("colors.surface");
+    }
+
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        background: theme("colors.surface");
+        border-radius: 999px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        background: theme("colors.outline");
+        border-radius: 999px;
+        border: 2px solid theme("colors.surface");
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+        background: theme("colors.primary");
+    }
+
+    .typing-cursor {
+        animation: typing-cursor-blink 0.9s step-end infinite;
+    }
+
+    @keyframes typing-cursor-blink {
+        0%,
+        100% {
+            opacity: 1;
+        }
+
+        50% {
+            opacity: 0;
+        }
+    }
+}
