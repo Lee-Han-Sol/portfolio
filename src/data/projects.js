@@ -5,7 +5,60 @@ import msaGrpcArchitecture from "../assets/projects/msa-grpc-architecture.png";
 import gasAlertArchitecture from "../assets/projects/gas-alert-architecture.png";
 
 export const projects = [
-  {
+    {
+        id: "gas-alert-system",
+        title: "가스 감지 알림 시스템 (개인)",
+        description:
+            "가스 측정값을 REST API로 저장하고 위험 이벤트를 Outbox 패턴으로 분리해 SNS, Lambda, Slack 알림으로 전달한 개인 프로젝트입니다.",
+        period: "2026년 3월 9일 → 2026년 3월 23일",
+        contribution: "100%",
+        tags: ["Node.js", "TypeScript", "Fastify", "TypeORM", "AWS SNS", "Lambda", "Terraform"],
+        span: "md:col-span-8",
+        architectureImages: [
+            {
+                src: gasAlertArchitecture,
+                alt: "가스 감지 알림 시스템 아키텍처",
+            },
+        ],
+        githubUrl: "https://github.com/Lee-Han-Sol/ToyProject_01",
+        detail: {
+            summary:
+                "가스 측정기기에서 측정값이 들어오면 REST API로 저장하고, 위험 이벤트를 비동기로 발행하여 SNS → Lambda → Slack 알림을 전송하는 시스템입니다. 인프라는 Terraform으로 구성하고 EC2 + Docker + GitHub Actions로 자동 배포했습니다.",
+            implementations: [
+                "가스 측정기기에서 측정값 수신 → REST API 호출 → DB 저장",
+                "위험도 판정 결과를 Outbox 패턴으로 안정적으로 이벤트화",
+                "이벤트를 AWS SNS로 발행하고 AWS Lambda가 구독하여 Slack으로 알림 전송",
+                "Terraform으로 인프라를 코드화하고 EC2 + Docker + GitHub Actions로 자동 배포",
+                "EC2 IAM Role로 SNS publish 권한을 위임해 AccessKey를 서버에 두지 않도록 구성",
+            ],
+            members: ["이한솔"],
+            achievements: [
+                "저장 동기 로직과 알림 비동기 로직 분리",
+                "Outbox로 정합성과 재시도 기반 마련",
+                "SNS로 fan-out 확장 가능한 이벤트 허브 구성",
+                "EC2 IAM Role 기반으로 AWS 키 없이 SNS publish",
+                "Terraform + GitHub Actions로 재현 가능한 운영 자동화 구성",
+            ],
+            techGroups: [
+                {
+                    title: "Languages & Frameworks",
+                    accent: "primary",
+                    items: ["Node.js", "TypeScript", "Fastify", "TypeORM"],
+                },
+                {
+                    title: "Infrastructure & Data",
+                    accent: "secondary",
+                    items: ["MySQL (Docker)", "AWS SNS", "AWS Lambda", "EC2", "Docker Compose"],
+                },
+                {
+                    title: "DevOps & Quality",
+                    accent: "tertiary",
+                    items: ["Terraform", "GitHub Actions", "Swagger(OpenAPI)", "Vitest", "Slack Incoming Webhook"],
+                },
+            ],
+        },
+    },
+    {
     id: "ble-locker-system",
     title: "BLE 락커 시스템",
     description:
@@ -13,7 +66,7 @@ export const projects = [
     period: "2024년 8월 5일 → 2025년 6월 15일",
     contribution: "50%",
     tags: ["NestJS", "TypeScript", "MySQL", "Redis", "FCM", "Nginx"],
-    span: "md:col-span-8",
+    span: "md:col-span-4",
     architectureImages: [
       {
         src: bleLockerArchitecture,
@@ -229,59 +282,6 @@ export const projects = [
           title: "UI & Dashboard",
           accent: "tertiary",
           items: ["Admin Page", "Attendance Dashboard", "Donut Chart", "Filtering UI"],
-        },
-      ],
-    },
-  },
-  {
-    id: "gas-alert-system",
-    title: "가스 감지 알림 시스템 (개인)",
-    description:
-      "가스 측정값을 REST API로 저장하고 위험 이벤트를 Outbox 패턴으로 분리해 SNS, Lambda, Slack 알림으로 전달한 개인 프로젝트입니다.",
-    period: "2026년 3월 9일 → 2026년 3월 23일",
-    contribution: "100%",
-    tags: ["Node.js", "TypeScript", "Fastify", "TypeORM", "AWS SNS", "Lambda", "Terraform"],
-    span: "md:col-span-4",
-    architectureImages: [
-      {
-        src: gasAlertArchitecture,
-        alt: "가스 감지 알림 시스템 아키텍처",
-      },
-    ],
-    githubUrl: "https://github.com/Lee-Han-Sol/ToyProject_01",
-    detail: {
-      summary:
-        "가스 측정기기에서 측정값이 들어오면 REST API로 저장하고, 위험 이벤트를 비동기로 발행하여 SNS → Lambda → Slack 알림을 전송하는 시스템입니다. 인프라는 Terraform으로 구성하고 EC2 + Docker + GitHub Actions로 자동 배포했습니다.",
-      implementations: [
-        "가스 측정기기에서 측정값 수신 → REST API 호출 → DB 저장",
-        "위험도 판정 결과를 Outbox 패턴으로 안정적으로 이벤트화",
-        "이벤트를 AWS SNS로 발행하고 AWS Lambda가 구독하여 Slack으로 알림 전송",
-        "Terraform으로 인프라를 코드화하고 EC2 + Docker + GitHub Actions로 자동 배포",
-        "EC2 IAM Role로 SNS publish 권한을 위임해 AccessKey를 서버에 두지 않도록 구성",
-      ],
-      members: ["이한솔"],
-      achievements: [
-        "저장 동기 로직과 알림 비동기 로직 분리",
-        "Outbox로 정합성과 재시도 기반 마련",
-        "SNS로 fan-out 확장 가능한 이벤트 허브 구성",
-        "EC2 IAM Role 기반으로 AWS 키 없이 SNS publish",
-        "Terraform + GitHub Actions로 재현 가능한 운영 자동화 구성",
-      ],
-      techGroups: [
-        {
-          title: "Languages & Frameworks",
-          accent: "primary",
-          items: ["Node.js", "TypeScript", "Fastify", "TypeORM"],
-        },
-        {
-          title: "Infrastructure & Data",
-          accent: "secondary",
-          items: ["MySQL (Docker)", "AWS SNS", "AWS Lambda", "EC2", "Docker Compose"],
-        },
-        {
-          title: "DevOps & Quality",
-          accent: "tertiary",
-          items: ["Terraform", "GitHub Actions", "Swagger(OpenAPI)", "Vitest", "Slack Incoming Webhook"],
         },
       ],
     },

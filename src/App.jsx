@@ -645,7 +645,7 @@ function ProjectCard({ project, onOpenModal }) {
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
             <div className="relative z-10">
-                <h3 className="font-headline-lg-mobile text-headline-lg-mobile mb-2">
+                <h3 className="font-headline-lg-mobile text-primary text-headline-lg-mobile mb-2">
                     {project.title}
                 </h3>
 
@@ -791,8 +791,10 @@ function ProjectModal({ project, onClose }) {
                 onClick={onClose}
             />
 
-            <div className="relative bg-surface-container border border-primary/30 rounded-xl shadow-[0_0_24px_rgba(0,0,0,0.5)] max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col md:flex-row">
-                <div className="flex-grow p-8 border-b md:border-b-0 md:border-r border-white/10 overflow-y-auto custom-scrollbar max-h-[90vh]">
+            {/*<div className="relative bg-surface-container border border-primary/30 rounded-xl shadow-[0_0_24px_rgba(0,0,0,0.5)] max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col md:flex-row">*/}
+            <div className="relative bg-surface-container border border-primary/30 rounded-lg shadow-[0_0_24px_rgba(0,0,0,0.5)] w-[min(94vw,1280px)] max-h-[90vh] overflow-hidden flex flex-col md:flex-row">
+                {/*<div className="flex-grow p-8 border-b md:border-b-0 md:border-r border-white/10 overflow-y-auto custom-scrollbar max-h-[90vh]">*/}
+                <div className="flex-grow p-8 lg:p-10 border-b md:border-b-0 md:border-r border-white/10 overflow-y-auto custom-scrollbar max-h-[90vh]">
                     <div className="flex justify-between items-start mb-6">
                         <div>
                             <h2 className="font-headline-lg text-headline-lg text-primary">
@@ -884,7 +886,8 @@ function ProjectModal({ project, onClose }) {
                     </ul>
                 </div>
 
-                <aside className="w-full md:w-[320px] shrink-0 bg-surface p-8 relative md:max-h-[90vh] md:overflow-hidden">
+                {/*<aside className="w-full md:w-[320px] shrink-0 bg-surface p-8 relative md:max-h-[90vh] md:overflow-hidden">*/}
+                <aside className="w-full md:w-[360px] shrink-0 bg-surface p-8 relative md:max-h-[90vh] md:overflow-hidden">
                     <button
                         type="button"
                         className="hidden md:block absolute top-4 right-4 text-on-surface-variant hover:text-primary transition-colors"

@@ -64,7 +64,8 @@ export default {
                 "tertiary-fixed": "#F8E3A1",
                 "on-tertiary": "#341A00",
 
-                "on-surface-variant": "#8B949E",
+                // "on-surface-variant": "#8B949E",
+                "on-surface-variant": "#C9D1D9",
                 "on-primary": "#0D1117",
                 "primary-fixed-dim": "#79C0FF",
 
@@ -101,7 +102,8 @@ export default {
 
                 background: "#0D1117",
                 "on-background": "#E6EDF3",
-                "on-surface": "#E6EDF3",
+                // "on-surface": "#E6EDF3",
+                "on-surface": "#F0F6FC",
             },
             borderRadius: {
                 DEFAULT: "0.125rem",
