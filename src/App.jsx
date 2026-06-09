@@ -783,47 +783,52 @@ function ProjectModal({ project, onClose }) {
     const achievements = project.detail?.achievements ?? [];
 
     return (
-        <div className="fixed inset-0 z-[100] bg-background/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] bg-background/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 lg:p-6">
             <button
                 type="button"
-                aria-label="Close modal"
+                aria-label="Close modal backdrop"
                 className="absolute inset-0 cursor-pointer"
                 onClick={onClose}
             />
 
-            {/*<div className="relative bg-surface-container border border-primary/30 rounded-xl shadow-[0_0_24px_rgba(0,0,0,0.5)] max-w-5xl w-full max-h-[90vh] overflow-hidden flex flex-col md:flex-row">*/}
-            <div className="relative bg-surface-container border border-primary/30 rounded-lg shadow-[0_0_24px_rgba(0,0,0,0.5)] w-[min(94vw,1280px)] max-h-[90vh] overflow-hidden flex flex-col md:flex-row">
-                {/*<div className="flex-grow p-8 border-b md:border-b-0 md:border-r border-white/10 overflow-y-auto custom-scrollbar max-h-[90vh]">*/}
-                <div className="flex-grow p-8 lg:p-10 border-b md:border-b-0 md:border-r border-white/10 overflow-y-auto custom-scrollbar max-h-[90vh]">
-                    <div className="flex justify-between items-start mb-6">
-                        <div>
-                            <h2 className="font-headline-lg text-headline-lg text-primary">
-                                {project.title}
-                            </h2>
+            <div className="relative z-10 bg-surface-container border border-primary/30 rounded-lg shadow-[0_0_24px_rgba(0,0,0,0.5)] w-full max-w-[1280px] max-h-[calc(100dvh-24px)] lg:max-h-[90dvh] overflow-y-auto lg:overflow-hidden custom-scrollbar flex flex-col lg:flex-row">
+                <div className="flex-1 min-w-0 p-5 sm:p-6 lg:p-10 border-b lg:border-b-0 lg:border-r border-white/10 lg:overflow-y-auto lg:max-h-[90dvh] custom-scrollbar">
+                    <div className="sticky top-0 z-20 -mx-5 sm:-mx-6 lg:mx-0 -mt-5 sm:-mt-6 lg:mt-0 px-5 sm:px-6 lg:px-0 pt-5 sm:pt-6 lg:pt-0 pb-4 bg-surface-container/95 backdrop-blur-md lg:static lg:bg-transparent lg:backdrop-blur-0">
+                        <div className="flex justify-between items-start gap-4">
+                            <div className="min-w-0">
+                                <h2 className="font-headline-lg text-[24px] sm:text-[28px] lg:text-headline-lg leading-[32px] lg:leading-[40px] text-primary break-keep">
+                                    {project.title}
+                                </h2>
 
-                            {(project.period || project.contribution) && (
-                                <div className="flex flex-wrap gap-3 mt-3 font-code-sm text-code-sm text-on-surface-variant">
-                                    {project.period && <span>{project.period}</span>}
-                                    {project.contribution && (
-                                        <span className="text-secondary">
-                                            기여도 {project.contribution}
-                                        </span>
-                                    )}
-                                </div>
-                            )}
+                                {(project.period || project.contribution) && (
+                                    <div className="flex flex-wrap gap-2 sm:gap-3 mt-3 font-code-sm text-code-sm text-on-surface-variant">
+                                        {project.period && (
+                                            <span className="rounded-lg border border-white/10 bg-surface px-2 py-1">
+                                                {project.period}
+                                            </span>
+                                        )}
+
+                                        {project.contribution && (
+                                            <span className="rounded-lg border border-secondary/20 bg-secondary/10 px-2 py-1 text-secondary">
+                                                기여도 {project.contribution}
+                                            </span>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+
+                            <button
+                                type="button"
+                                aria-label="Close modal"
+                                className="shrink-0 text-on-surface-variant hover:text-primary transition-colors"
+                                onClick={onClose}
+                            >
+                                <span className="material-symbols-outlined">close</span>
+                            </button>
                         </div>
-
-                        <button
-                            type="button"
-                            className="md:hidden text-on-surface-variant hover:text-primary"
-                            onClick={onClose}
-                        >
-                            <span className="material-symbols-outlined">close</span>
-                        </button>
                     </div>
 
-                    <ModalSectionTitle>프로젝트 개요</ModalSectionTitle>
-                    <p className="font-body-md text-body-md text-on-surface-variant mb-8 leading-relaxed">
+                    <p className="font-body-md text-[15px] sm:text-body-md leading-[25px] sm:leading-[26px] text-on-surface-variant mb-8 break-keep">
                         {project.detail?.summary}
                     </p>
 
@@ -834,25 +839,25 @@ function ProjectModal({ project, onClose }) {
                             {architectureImages.map((image) => (
                                 <div
                                     key={image.alt}
-                                    className="bg-surface border border-white/5 rounded p-4 flex items-center justify-center"
+                                    className="bg-surface border border-white/5 rounded-lg p-3 sm:p-4 flex items-center justify-center overflow-x-auto"
                                 >
                                     <img
                                         src={image.src}
                                         alt={image.alt}
-                                        className="relative z-10 max-w-full h-auto rounded"
+                                        className="relative z-10 w-full max-h-[520px] object-contain rounded-lg"
                                     />
                                 </div>
                             ))}
                         </div>
                     ) : (
-                        <div className="bg-surface border border-white/5 rounded p-6 mb-8 text-on-surface-variant font-code-sm text-code-sm">
+                        <div className="bg-surface border border-white/5 rounded-lg p-6 mb-8 text-on-surface-variant font-code-sm text-code-sm break-keep">
                             등록된 아키텍처 이미지가 없습니다.
                         </div>
                     )}
 
                     <ModalSectionTitle>구현 내용</ModalSectionTitle>
 
-                    <ol className="space-y-2 mb-8 list-decimal list-inside font-body-md text-body-md text-on-surface-variant">
+                    <ol className="space-y-3 mb-8 list-decimal pl-5 font-body-md text-[15px] sm:text-body-md leading-[24px] text-on-surface-variant marker:text-primary break-keep">
                         {implementations.map((item) => (
                             <li key={item}>{item}</li>
                         ))}
@@ -864,7 +869,7 @@ function ProjectModal({ project, onClose }) {
                         {members.map((member) => (
                             <li
                                 key={member}
-                                className="font-body-md text-body-md text-on-surface-variant flex items-start gap-2"
+                                className="font-body-md text-[15px] sm:text-body-md text-on-surface-variant flex items-start gap-2 break-keep"
                             >
                                 <span className="text-primary">•</span>
                                 {member}
@@ -874,11 +879,11 @@ function ProjectModal({ project, onClose }) {
 
                     <ModalSectionTitle>성과</ModalSectionTitle>
 
-                    <ul className="space-y-2 mb-8">
+                    <ul className="space-y-3 mb-2">
                         {achievements.map((item) => (
                             <li
                                 key={item}
-                                className="font-body-md text-body-md text-on-surface-variant flex items-start gap-2"
+                                className="font-body-md text-[15px] sm:text-body-md leading-[24px] text-on-surface-variant flex items-start gap-2 break-keep"
                             >
                                 <span className="text-primary">•</span>
                                 {item}
@@ -887,30 +892,21 @@ function ProjectModal({ project, onClose }) {
                     </ul>
                 </div>
 
-                {/*<aside className="w-full md:w-[320px] shrink-0 bg-surface p-8 relative md:max-h-[90vh] md:overflow-hidden">*/}
-                <aside className="w-full md:w-[360px] shrink-0 bg-surface p-8 relative md:max-h-[90vh] md:overflow-hidden">
-                    <button
-                        type="button"
-                        className="hidden md:block absolute top-4 right-4 text-on-surface-variant hover:text-primary transition-colors"
-                        onClick={onClose}
-                    >
-                        <span className="material-symbols-outlined">close</span>
-                    </button>
-
-                    <h4 className="font-label-caps text-label-caps text-secondary mb-8 mt-8 md:mt-0">
+                <aside className="w-full lg:w-[360px] shrink-0 bg-surface p-5 sm:p-6 lg:p-8 lg:max-h-[90dvh] lg:overflow-y-auto custom-scrollbar">
+                    <h4 className="font-label-caps text-label-caps text-secondary mb-6">
                         Technical Specs
                     </h4>
 
-                    <div className="space-y-10">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-8 lg:gap-10">
                         {techGroups.map((group) => (
                             <TechGroup key={group.title} group={group} />
                         ))}
                     </div>
 
                     {project.githubUrl && project.githubUrl !== "#" && (
-                        <div className="mt-12">
+                        <div className="mt-8 lg:mt-12">
                             <a
-                                className="w-full border border-primary text-primary px-4 py-2 rounded font-label-caps text-label-caps hover:bg-primary/10 transition-colors flex justify-center items-center gap-2"
+                                className="w-full border border-primary text-primary px-4 py-3 rounded-lg font-label-caps text-label-caps hover:bg-primary/10 transition-colors flex justify-center items-center gap-2"
                                 href={project.githubUrl}
                                 rel="noopener noreferrer"
                                 target="_blank"
@@ -930,20 +926,20 @@ function TechGroup({ group }) {
     const style = getTechGroupStyle(group.accent);
 
     return (
-        <section>
+        <section className="min-w-0">
             <h5
-                className={`font-code-sm text-code-sm text-on-surface-variant mb-4 border-l-2 pl-3 ${style.border}`}
+                className={`font-code-sm text-code-sm text-on-surface mb-4 border-l-2 pl-3 break-keep ${style.border}`}
             >
                 {group.title}
             </h5>
 
             <ul className="space-y-3">
                 {group.items.map((item) => (
-                    <li key={item} className="flex items-center gap-3">
-                        <span className={`h-2 w-2 rounded-full shrink-0 ${style.dot}`} />
-                        <span className="font-code-sm text-code-sm text-on-surface-variant">
-              {item}
-            </span>
+                    <li key={item} className="flex items-start gap-3 min-w-0">
+                        <span className={`mt-2 h-2 w-2 rounded-lg shrink-0 ${style.dot}`} />
+                        <span className="font-code-sm text-code-sm text-on-surface-variant break-keep">
+                            {item}
+                        </span>
                     </li>
                 ))}
             </ul>
