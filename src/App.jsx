@@ -830,6 +830,8 @@ function ProjectModal({ project, onClose }) {
                         </div>
                     </div>
 
+                    <ModalSectionTitle>프로젝트 개요</ModalSectionTitle>
+                    
                     <p className="font-body-md text-[15px] sm:text-body-md leading-[25px] sm:leading-[26px] text-on-surface-variant mb-8 break-keep">
                         {project.detail?.summary}
                     </p>
