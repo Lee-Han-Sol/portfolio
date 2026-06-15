@@ -778,7 +778,9 @@ function Contact() {
 function ProjectModal({ project, onClose }) {
     const architectureImages = project.architectureImages ?? [];
     const techGroups = project.detail?.techGroups ?? [];
+    const designPoints = project.detail?.designPoints ?? [];
     const implementations = project.detail?.implementations ?? [];
+    const troubleshooting = project.detail?.troubleshooting ?? [];
     const members = project.detail?.members ?? [];
     const achievements = project.detail?.achievements ?? [];
 
@@ -855,6 +857,29 @@ function ProjectModal({ project, onClose }) {
                         </div>
                     )}
 
+                    {designPoints.length > 0 && (
+                        <>
+                            <ModalSectionTitle>핵심 설계 포인트</ModalSectionTitle>
+
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                                {designPoints.map((point) => (
+                                    <article
+                                        key={point.title}
+                                        className="bg-surface border border-white/5 rounded-lg p-4"
+                                    >
+                                        <h5 className="font-body-md text-body-md text-primary font-semibold mb-2 break-keep">
+                                            {point.title}
+                                        </h5>
+
+                                        <p className="text-on-surface-variant text-[15px] leading-[24px] break-keep">
+                                            {point.description}
+                                        </p>
+                                    </article>
+                                ))}
+                            </div>
+                        </>
+                    )}
+
                     <ModalSectionTitle>구현 내용</ModalSectionTitle>
 
                     <ol className="space-y-3 mb-8 list-decimal pl-5 font-body-md text-[15px] sm:text-body-md leading-[24px] text-on-surface-variant marker:text-primary break-keep">
@@ -862,6 +887,24 @@ function ProjectModal({ project, onClose }) {
                             <li key={item}>{item}</li>
                         ))}
                     </ol>
+
+                    {troubleshooting.length > 0 && (
+                        <>
+                            <ModalSectionTitle>운영 / 트러블슈팅 경험</ModalSectionTitle>
+
+                            <ul className="space-y-3 mb-8">
+                                {troubleshooting.map((item) => (
+                                    <li
+                                        key={item}
+                                        className="font-body-md text-[15px] leading-[24px] text-on-surface-variant flex items-start gap-2 break-keep"
+                                    >
+                                        <span className="text-tertiary">•</span>
+                                        {item}
+                                    </li>
+                                ))}
+                            </ul>
+                        </>
+                    )}
 
                     <ModalSectionTitle>관련 멤버</ModalSectionTitle>
 
@@ -904,7 +947,11 @@ function ProjectModal({ project, onClose }) {
                     </div>
 
                     {project.githubUrl && project.githubUrl !== "#" && (
-                        <div className="mt-8 lg:mt-12">
+                        <div className="mt-12">
+                            <p className="text-on-surface-variant text-[13px] leading-[20px] mb-3 break-keep">
+                                실행 방법, 배포 과정, 트러블슈팅 상세 내용은 GitHub README에 정리했습니다.
+                            </p>
+
                             <a
                                 className="w-full border border-primary text-primary px-4 py-3 rounded-lg font-label-caps text-label-caps hover:bg-primary/10 transition-colors flex justify-center items-center gap-2"
                                 href={project.githubUrl}
@@ -912,7 +959,7 @@ function ProjectModal({ project, onClose }) {
                                 target="_blank"
                             >
                                 <span className="material-symbols-outlined text-sm">code</span>
-                                View on GitHub
+                                전체 README / 코드 보기
                             </a>
                         </div>
                     )}

@@ -23,15 +23,51 @@ export const projects = [
         githubUrl: "https://github.com/Lee-Han-Sol/ToyProject_01",
         detail: {
             summary:
-                "가스 측정기기에서 측정값이 들어오면 REST API로 저장하고, 위험 이벤트를 비동기로 발행하여 SNS → Lambda → Slack 알림을 전송하는 시스템입니다. 인프라는 Terraform으로 구성하고 EC2 + Docker + GitHub Actions로 자동 배포했습니다.",
+                "가스 측정값을 REST API로 저장하고, 위험 이벤트를 Outbox 패턴으로 분리해 SNS → Lambda → Slack 알림으로 전파하는 백엔드 시스템입니다. Terraform으로 인프라를 코드화하고, EC2 + Docker + GitHub Actions 기반 자동 배포 흐름까지 구성했습니다.",
+
+            designPoints: [
+                {
+                    title: "동기 저장과 비동기 알림 분리",
+                    description:
+                        "가스 측정값 저장은 REST API 요청 흐름에서 처리하고, 알림 전송은 Outbox 이벤트로 분리해 저장 로직과 알림 로직의 결합도를 낮췄습니다.",
+                },
+                {
+                    title: "Outbox 기반 이벤트 정합성",
+                    description:
+                        "위험 이벤트 발생 시 GasAlert와 OutboxEvent(PENDING)를 함께 저장하고, Publisher가 이벤트 발행 후 SENT/FAILED 상태로 전이하도록 구성했습니다.",
+                },
+                {
+                    title: "SNS 기반 확장 가능한 알림 구조",
+                    description:
+                        "AWS SNS를 이벤트 허브로 사용하고 Lambda가 이를 구독해 Slack으로 알림을 전송하도록 구성했습니다. 향후 다른 알림 채널을 추가하기 쉬운 구조입니다.",
+                },
+                {
+                    title: "운영 보안을 고려한 IAM Role",
+                    description:
+                        "EC2에 AccessKey를 직접 저장하지 않고, IAM Instance Profile을 통해 SNS publish 권한을 위임하는 방식으로 운영 환경을 구성했습니다.",
+                },
+            ],
+
             implementations: [
                 "가스 측정기기에서 측정값 수신 → REST API 호출 → DB 저장",
-                "위험도 판정 결과를 Outbox 패턴으로 안정적으로 이벤트화",
-                "이벤트를 AWS SNS로 발행하고 AWS Lambda가 구독하여 Slack으로 알림 전송",
-                "Terraform으로 인프라를 코드화하고 EC2 + Docker + GitHub Actions로 자동 배포",
-                "EC2 IAM Role로 SNS publish 권한을 위임해 AccessKey를 서버에 두지 않도록 구성",
+                "측정값 기준으로 NORMAL / WARNING / DANGER 위험도 판정",
+                "위험 이벤트 발생 시 GasAlert와 OutboxEvent(PENDING)를 트랜잭션 내 함께 저장",
+                "OutboxPublisher가 PENDING 이벤트를 AWS SNS로 발행하고 SENT / FAILED 상태로 전이",
+                "AWS Lambda가 SNS 이벤트를 구독하여 Slack Incoming Webhook으로 알림 전송",
+                "Terraform으로 SNS Topic, Lambda, Subscription, IAM Role, Instance Profile 구성",
+                "EC2 + Docker Compose로 API와 MySQL을 운영 환경에 배포",
+                "GitHub Actions를 통해 main 브랜치 반영 시 EC2 자동 배포 구성",
             ],
+
+            troubleshooting: [
+                "Fastify 환경에서는 NestJS의 DTO decorator 기반 Swagger 방식을 그대로 쓰기 어려워 Route Schema(JSON Schema) 방식으로 문서 구조를 분리했습니다.",
+                "TypeORM 컬럼 타입이 Object로 추론되어 MySQL 초기화가 실패한 문제를 decorator metadata 설정과 명시적 컬럼 타입 지정으로 해결했습니다.",
+                "Docker 컨테이너 내부 통신에서는 MySQL 접속 호스트와 포트가 로컬 실행 방식과 달라지는 문제를 정리하고 환경변수를 분리했습니다.",
+                "EC2 Role 기반 SNS publish를 위해 운영 환경에서는 AWS Access Key를 제거하고 IAM Role 기반 권한 위임 방식으로 정리했습니다.",
+            ],
+
             members: ["이한솔"],
+
             achievements: [
                 "저장 동기 로직과 알림 비동기 로직 분리",
                 "Outbox로 정합성과 재시도 기반 마련",
@@ -39,6 +75,7 @@ export const projects = [
                 "EC2 IAM Role 기반으로 AWS 키 없이 SNS publish",
                 "Terraform + GitHub Actions로 재현 가능한 운영 자동화 구성",
             ],
+
             techGroups: [
                 {
                     title: "Languages & Frameworks",
